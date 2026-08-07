@@ -3,7 +3,7 @@ training:
   batch_size: 256
 
 models:
-  CoSynRNN:
+  CoSynRNNModel:
     # RNN specific
     dt: [20]
     tau: [100]

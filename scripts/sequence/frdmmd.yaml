@@ -61,13 +61,13 @@ workflow:
     training_tasks: [multidelaydm-ry]
     validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
-    
+
 training:
   batch_mode: fixed
   batch_size: 256
 
-projects:
-  ProgressiveSparseContextModulatedRNNProject:
+models:
+  CoSynRNNModel:
     # RNN specific
     dt: [20]
     tau: [100]

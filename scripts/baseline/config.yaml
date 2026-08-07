@@ -24,8 +24,8 @@ training:
   batch_mode: fixed
   batch_size: 256
 
-projects:
-  ProgressiveSparseContextModulatedRNNProject:
+models:
+  CoSynRNNModel:
     # RNN specific
     dt: [20]
     tau: [100]

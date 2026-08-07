@@ -1,49 +1,71 @@
 # Discrete Synaptic States and Context-Modulated Readouts Support Continual Learning
 
-## Overview
+This repository contains the code used for the experiments and analyses presented in:
 
-This repository contains the code associated with the paper titled "Discrete synaptic states and context-modulated readouts support continual learning". The code implements  the recurrent neural network models and the analyses described in the paper. [link to paper]()
-
-## Requirements
-
-- Python (3.10)
-- TensorFlow (2)
-- Other dependencies as specified in the requirements.txt file
+> **Discrete Synaptic States and Context-Modulated Readouts Support Continual Learning**
+> [Paper link]()
 
 ## Installation
 
-1. Clone this repository to your local machine:
+The code was developed and tested on Linux with CUDA 13.
 
-```
-git clone https://github.com/lauradriscoll/flexible_multitask.git
+Create the Conda environment from the repository root:
+
+```bash
+conda env create -f packages/nntp/environments/linux-cuda13.yml
+conda activate nntp-cuda13
 ```
 
-2. Install the required dependencies:
+Install the `nntp` package:
 
+```bash
+pip install -e ./packages/nntp
 ```
-conda create --name flex_mult python=3.10
-conda activate flex_mult
-cd flexible_multitask
-vim .env [download processed data from links below and update path to data and this repo]
-pip install -e .
+
+Weights & Biases logging is optional. To enable it, log in with:
+
+```bash
+wandb login
 ```
+
+Logging can be disabled in the experiment configuration.
 
 ## Usage
 
-- `stepnet`: Code for training networks with random initializations.
+### Generate datasets
 
-- `transfer_learn`: Code for training networks starting from a pretrained network.
+```bash
+./scripts/data/generate_data.sh
+```
 
-- `utils`: This folder contains utility functions used across different parts of the codebase, such as data preprocessing, etc.
+The script generates the training, validation, and test datasets required by the configured tasks and random seeds.
 
-- `analysis`: Reproduces figures in paper using open source data.
+### Run an experiment
 
-## Data
+```bash
+nntp \
+  --entrypoint ./src/entrypoint.py \
+  run \
+  --config ./documents/example.yaml \
+  --debug
+```
 
-Trained networks were deposited on the Allen Institute database 'multitask_shared', and additional processed data to generate all figures, including fixed point locations, were deposited at 'multitask_processed' : [https://open.quiltdata.com/b/aind-trained-networks/tree/](url)
+Remove `--debug` for a standard experiment run.
+
+## Repository Structure
+
+```text
+.
+├── packages/nntp/      # Training pipeline package
+├── figures/            # Paper figures
+├── src/                # CoSyn-RNN models and entry point
+└── scripts/            # Experiment scripts
+```
 
 ## Citation
 
-If you use this code in your research, please cite the following paper:
+If you use this code in your research, please cite:
 
+```bibtex
 XXX
+```
