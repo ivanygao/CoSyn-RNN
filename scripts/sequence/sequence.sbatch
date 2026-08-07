@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --job-name=nntp-sequence
+#SBATCH --output=runtime/logs/%x-%j.out
+#SBATCH --error=runtime/logs/%x-%j.err
+
+#SBATCH --nodes=1
+#SBATCH --mem=256G
+#SBATCH --gres=gpu:1
+#SBATCH --time=24:00:00
+#SBATCH --partition=aind
+#SBATCH --constraint="h200|a100"
+#SBATCH --qos=medium
+
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=ivan.y.gao@alleninstitute.org
+
+set -e
+
+echo "SLURM job started at: $(date)"
+
+mkdir -p runtime/logs
+
+# ========== 1. Activate Environment ==========
+source ~/.bashrc
+conda activate nntp-cuda12
+
+# ========== 2. Move to project root ==========
+cd /allen/aind/scratch/ivan.y.gao/Neural-Network-Training-Pipeline
+
+echo "Running on node: $(hostname)"
+
+# ========== 3. Run ==========
+# CONFIG=scripts/sequence/frdmmd.yaml
+CONFIG=scripts/sequence/mddmrf.yaml
+
+echo "[$SLURM_JOB_ID] Running config: $CONFIG"
+
+nntp --entrypoint=./src/entrypoint.py run --config="${CONFIG}"

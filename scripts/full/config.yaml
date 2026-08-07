@@ -1,0 +1,154 @@
+name: "full"
+note: ""
+description: "this is a full task experiment template"
+seed: [42]
+
+logger:
+  checkpoint_interval: 100
+  wandb: full
+
+dataset:
+  training_size: 128000
+  validation_size: 4096
+  test_size: 4096
+  
+workflow:
+  - name: "phase1"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [fdgo-ry]
+    validation_tasks: &all_tasks
+      [fdgo-ry, reactgo-ry, delaygo-ry, fdanti-ry, reactanti-ry, delayanti-ry, dm1-ry, dm2-ry, contextdm1-ry, contextdm2-ry, multidm-ry, delaydm1-ry, delaydm2-ry, contextdelaydm1-ry, contextdelaydm2-ry, multidelaydm-ry]
+    test_tasks: *all_tasks
+  - name: "phase2"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [reactgo-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase3"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [delaygo-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase4"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [fdanti-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase5"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [reactanti-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase6"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [delayanti-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase7"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [dm1-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase8"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [dm2-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase9"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [contextdm1-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase10"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [contextdm2-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase11"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [multidm-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase12"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [delaydm1-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase13"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [delaydm2-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase14"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [contextdelaydm1-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase15"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [contextdelaydm2-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+  - name: "phase16"
+    epochs: 100
+    training_strategy: sequential
+    training_tasks: [multidelaydm-ry]
+    validation_tasks: *all_tasks
+    test_tasks: *all_tasks
+
+training:
+  batch_mode: fixed
+  batch_size: 256
+
+projects:
+  ProgressiveSparseContextModulatedRNNProject:
+    # RNN specific
+    dt: [20]
+    tau: [100]
+    hidden_size: [256]
+    hidden_activation: [leakyrelu]
+    excitation_activation: [relu]
+    modulation_activation: [sigmoid20]
+    output_activation: [linear]
+    initial_weight_distribution: [uniform]
+    initial_spectral_radius: [1]
+    noise_std: [0.05]
+
+    cue_index_start: [65]
+    threshold: [1e-4]
+
+    # training required parameters
+    loss: [mse]
+    optimizer: [adam]
+    learning_rate: [1e-4]
+
+    penalty_loss_coefficient: [4]
+    
+    excitation_sparsity_penalty: [0.1]
+    recurrent_sparsity_penalty: [1]
+    recurrent_incoming_penalty: [0.01]
+    recurrent_outgoing_penalty: [0.01]
+    modulated_readout_penalty: [0.1]
+
+    # Task specific
+    fixation_tolerance: [0.1]
+    radius_tolerance: [0.2]
+    angle_tolerance: [36] # out of 360 degrees, RY's theta
+    fixation_threshold: [0.1]
+    radius_threshold: [0.2]
+    angle_threshold: [36] # out of 360 degrees, RY's theta

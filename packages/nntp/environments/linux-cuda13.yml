@@ -1,0 +1,26 @@
+name: nntp-cuda13
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - seaborn
+  - gputil
+  - hydra-core
+  - omegaconf
+  - pydantic
+  - wandb
+  - tqdm
+  - scikit-learn
+  - matplotlib
+  - plotly
+  - nbformat
+  - networkx
+  - ipykernel
+  - ipywidgets
+  - pip
+  - pip:
+      - jax[cuda13]
+      - flax
+      - optax
+      - --editable=../.
