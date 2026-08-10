@@ -11,7 +11,7 @@
 #SBATCH --time=48:00:00
 #SBATCH --partition=aind
 #SBATCH --constraint="h200|a100"
-#SBATCH --qos=medium
+#SBATCH --qos=low
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=ivan.y.gao@alleninstitute.org
@@ -29,7 +29,7 @@ source ~/.bashrc
 conda activate nntp-cuda12
 
 # ========== 2. Move to project root ==========
-cd /allen/aind/scratch/ivan.y.gao/Neural-Network-Training-Pipeline
+cd /allen/aind/scratch/ivan.y.gao/CoSyn-RNN
 
 echo "Running on node: $(hostname)"
 echo "SLURM_JOB_ID=${SLURM_JOB_ID}"
@@ -76,21 +76,21 @@ ORDERED_TASKS=(
 # max
 # ORDERED_TASKS=(
 #     "dm2-ry"
+#     "fdanti-ry"
+#     "contextdm2-ry"
 #     "fdgo-ry"
 #     "contextdm1-ry"
-#     "delayanti-ry"
-#     "contextdelaydm1-ry"
-#     "delaydm2-ry"
-#     "multidm-ry"
-#     "reactgo-ry"
-#     "contextdelaydm2-ry"
-#     "delaydm1-ry"
 #     "delaygo-ry"
+#     "contextdelaydm2-ry"
 #     "dm1-ry"
 #     "reactanti-ry"
 #     "multidelaydm-ry"
-#     "fdanti-ry"
-#     "contextdm2-ry"
+#     "reactgo-ry"
+#     "delaydm1-ry"
+#     "contextdelaydm1-ry"
+#     "delaydm2-ry"
+#     "delayanti-ry"
+#     "multidm-ry"
 # )
 
 echo "Using seed=${SEED}"
