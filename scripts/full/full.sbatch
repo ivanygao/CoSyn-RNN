@@ -11,7 +11,7 @@
 #SBATCH --time=48:00:00
 #SBATCH --partition=aind
 #SBATCH --constraint="h200|a100"
-#SBATCH --qos=low
+#SBATCH --qos=medium
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=ivan.y.gao@alleninstitute.org

@@ -8,6 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --time=4:00:00
 #SBATCH --partition=aind
+#SBATCH --qos=medium
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=ivan.y.gao@alleninstitute.org
@@ -22,12 +23,12 @@ cd /allen/aind/scratch/ivan.y.gao/Neural-Network-Training-Pipeline
 echo "Running on node: $(hostname)"
 
 # ========== 3. Define input/output ==========
-folder="./figures/experiments-sigmoid20"
-output="./figures/experiments-sigmoid20.tar.gz"
-# folder="./figures/similarity-sigmoid20"
-# output="./figures/similarity-sigmoid20.tar.gz"
-# folder="./figures/full-sigmoid20"
-# output="./figures/full-sigmoid20.tar.gz"
+# folder="./figures/experiments"
+# output="./figures/experiments.tar.gz"
+# folder="./figures/similarity"
+# output="./figures/similarity.tar.gz"
+folder="./figures/full"
+output="./figures/full.tar.gz"
 partial_output="${output}.partial"
 
 if [[ ! -d "$folder" ]]; then
