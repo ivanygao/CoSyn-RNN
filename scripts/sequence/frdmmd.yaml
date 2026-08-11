@@ -87,8 +87,6 @@ models:
     loss: [mse]
     optimizer: [adam]
     learning_rate: [1e-4]
-
-    penalty_loss_coefficient: [4]
     
     excitation_sparsity_penalty: [0.1]
     recurrent_sparsity_penalty: [1]

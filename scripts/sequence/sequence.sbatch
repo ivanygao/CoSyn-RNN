@@ -8,7 +8,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --time=24:00:00
 #SBATCH --partition=aind
-#SBATCH --constraint="h200|a100"
+#SBATCH --constraint="h200"
 #SBATCH --qos=medium
 
 #SBATCH --mail-type=BEGIN,END,FAIL

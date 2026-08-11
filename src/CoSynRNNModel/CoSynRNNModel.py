@@ -15,6 +15,8 @@ from .CoSynRNNModelUtils import compute_W_rec_task_block_cross_norms
 
 from .CoSynRNN import CoSynRNN
 
+from RobertYang2019.RobertYang2019Evaluator import build_evaluator
+
 
 class ModelState(ModelStateBase):
     def __init__(self, model, optimizer):
@@ -42,13 +44,16 @@ class CoSynRNNModel(ModelBase):
     def build_training_step(experiment_config: dict) -> callable:
         loss_fn = get_loss_function(experiment_config["loss"])
 
-        penalty_loss_coefficient = experiment_config["penalty_loss_coefficient"]
-
         excitation_sparsity_penalty = experiment_config["excitation_sparsity_penalty"]
         recurrent_sparsity_penalty = experiment_config["recurrent_sparsity_penalty"]
         recurrent_incoming_penalty = experiment_config["recurrent_incoming_penalty"]
         recurrent_outgoing_penalty = experiment_config["recurrent_outgoing_penalty"]
         modulated_readout_penalty = experiment_config["modulated_readout_penalty"]
+
+        evaluator = build_evaluator(experiment_config)
+
+        angle_threshold = experiment_config["angle_threshold"]
+        chance_level = (angle_threshold * 2) / 360
 
         @nnx.jit
         def training_step(state, X, Y, M, epoch, batch_count, batch_length):
@@ -61,7 +66,13 @@ class CoSynRNNModel(ModelBase):
                 eps = 1e-8
                 H = model.hidden_size
                 penalty_amplification = jax.lax.stop_gradient(
-                    -jnp.log(jnp.clip(task_loss, eps, 0.999)) / penalty_loss_coefficient
+                    jnp.clip(
+                        1.5
+                        * (evaluator(predict, Y, M)["accuracy_angle"] - chance_level)
+                        / (1.0 - chance_level),
+                        0.0,
+                        1.5,
+                    )
                 )
 
                 # ==============================
