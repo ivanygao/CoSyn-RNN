@@ -17,7 +17,7 @@ set -e
 echo "SLURM job started at: $(date)"
 
 # ========== 1. Move to project root ==========
-cd /allen/aind/scratch/ivan.y.gao/Neural-Network-Training-Pipeline
+cd /allen/aind/scratch/ivan.y.gao/CoSyn-RNN
 
 echo "Running on node: $(hostname)"
 

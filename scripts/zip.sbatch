@@ -18,17 +18,17 @@ set -e
 echo "SLURM job started at: $(date)"
 
 # ========== 1. Move to project root ==========
-cd /allen/aind/scratch/ivan.y.gao/Neural-Network-Training-Pipeline
+cd /allen/aind/scratch/ivan.y.gao/CoSyn-RNN
 
 echo "Running on node: $(hostname)"
 
 # ========== 3. Define input/output ==========
 # folder="./figures/experiments"
 # output="./figures/experiments.tar.gz"
-# folder="./figures/similarity"
-# output="./figures/similarity.tar.gz"
-folder="./figures/full"
-output="./figures/full.tar.gz"
+folder="./figures/similarity"
+output="./figures/similarity.tar.gz"
+# folder="./figures/full"
+# output="./figures/full.tar.gz"
 partial_output="${output}.partial"
 
 if [[ ! -d "$folder" ]]; then

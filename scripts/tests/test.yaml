@@ -1,16 +1,16 @@
 name: "test"
 note: ""
 description: "this is a test"
-seed: [1, 42]
+seed: [42]
 
 logger:
   checkpoint_interval: 4
   wandb: test
 
 dataset:
-  training_size: 4096
-  validation_size: 4096
-  test_size: 4096
+  training_size: 1024
+  validation_size: 1024
+  test_size: 1024
 
 workflow:
   - name: "phase1"
