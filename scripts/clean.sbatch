@@ -5,7 +5,7 @@
 
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=64
-#SBATCH --mem=128G
+#SBATCH --mem=64G
 #SBATCH --time=4:00:00
 #SBATCH --partition=aind
 
@@ -21,8 +21,10 @@ cd /allen/aind/scratch/ivan.y.gao/CoSyn-RNN
 
 echo "Running on node: $(hostname)"
 
-find wandb -type f -print0 | xargs -0 -n 1000 -P 64 rm -f
+# TARGET_DIR="figures/experiments-ln"
+# TARGET_DIR="figures/similarity-ln"
+TARGET_DIR="figures/full-ln"
 
-find wandb -type d -empty -delete
-
-rm -rf wandb
+find "$TARGET_DIR" -type f -print0 | xargs -0 -n 1000 -P 64 rm -f
+find "$TARGET_DIR" -type d -empty -delete
+rm -rf "$TARGET_DIR"
