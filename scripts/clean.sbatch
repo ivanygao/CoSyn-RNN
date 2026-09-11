@@ -10,7 +10,7 @@
 #SBATCH --partition=aind
 
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=ivan.y.gao@alleninstitute.org
+#SBATCH --mail-user=ivanygao@outlook.com
 
 set -e
 
