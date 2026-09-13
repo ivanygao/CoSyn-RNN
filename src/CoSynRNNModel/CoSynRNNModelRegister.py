@@ -15,7 +15,7 @@ class CoSynRNNModelConfig(CoSynRNNConfig):
     optimizer: list[Optimizer] = Field(min_length=1)
     learning_rate: list[PositiveFloat] = Field(min_length=1)
 
-    excitation_sparsity_penalty: list[NonNegativeFloat] = Field(min_length=1)
+    gain_sparsity_penalty: list[NonNegativeFloat] = Field(min_length=1)
     recurrent_sparsity_penalty: list[NonNegativeFloat] = Field(min_length=1)
     recurrent_incoming_penalty: list[NonNegativeFloat] = Field(min_length=1)
     recurrent_outgoing_penalty: list[NonNegativeFloat] = Field(min_length=1)

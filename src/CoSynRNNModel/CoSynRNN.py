@@ -22,7 +22,7 @@ def forward(
     W_out,  # [H, O]
     b_h,  # [H]
     b_y,  # [O]
-    excitation,  # [H]
+    gain,  # [H]
     W_mask,  # [C, H, O]
     dt,
     tau,
@@ -42,14 +42,14 @@ def forward(
     T, B, _ = X.shape
     H = b_h.shape[0]
 
-    excitation = jax.nn.relu(excitation)
+    gain = jax.nn.relu(gain)
 
     def step(old_h, inputs):  # X_t: [B, F], noise_t: [B, H]
         X_t, noise_t = inputs
         new_h = (1 - alpha) * old_h + alpha * hidden_activation(
             X_t @ W_in + old_h @ W_rec + b_h[None, :] + noise_t
         )  # [B, H]
-        new_h = new_h * excitation[None, :]
+        new_h = new_h * gain[None, :]
         return new_h, new_h
 
     noise = jax.random.normal(key, (T, B, H)) * noise_scale
@@ -88,9 +88,7 @@ class CoSynRNN(nnx.Module):
         self.tau = cfg["tau"]
         self.hidden_size = cfg["hidden_size"]
         self.hidden_activation = get_activation_function(cfg["hidden_activation"])
-        self.excitation_activation = get_activation_function(
-            cfg["excitation_activation"]
-        )
+        self.gain_activation = get_activation_function(cfg["gain_activation"])
         self.modulation_activation = get_activation_function(
             cfg["modulation_activation"]
         )
@@ -128,7 +126,7 @@ class CoSynRNN(nnx.Module):
         self.trainable_mask = nnx.Variable(
             jnp.ones((self.hidden_size,), dtype=jnp.bool_)
         )  # indicating which neurons are trainable
-        self.excitation = nnx.Param(jnp.ones((self.hidden_size,)))
+        self.gain = nnx.Param(jnp.ones((self.hidden_size,)))
 
         # plotting variable
         self.channel = nnx.Variable(
@@ -188,7 +186,7 @@ class CoSynRNN(nnx.Module):
         is_new_cue = (batch_count == 0) & (~channel_value[cue_index])
         should_consolidate = is_new_cue & (epoch > 1)
 
-        def consolidate(trainable_mask, excitation_value, identity):
+        def consolidate(trainable_mask, gain_value, identity):
             # recurrent
             W_rec_active_synapse = jnp.abs(W_rec_value) > threshold
             recurrent_free_neurons = (
@@ -228,29 +226,29 @@ class CoSynRNN(nnx.Module):
                 jnp.sum(trainable_mask_value),
             )
 
-            # reset excitation of newly trainable/free neurons to 1.0
-            excitation_value = jnp.where(trainable_mask_value, 1.0, excitation_value)
+            # reset gain of newly trainable/free neurons to 1.0
+            gain_value = jnp.where(trainable_mask_value, 1.0, gain_value)
 
             # identity update
             task_index = jnp.max(identity)
             identity_value = jnp.where(trainable_mask_value, task_index + 1, identity)
 
-            return (trainable_mask_value, excitation_value, identity_value)
+            return (trainable_mask_value, gain_value, identity_value)
 
         trainable_mask_value = self.trainable_mask.get_value()
-        excitation_value = self.excitation.get_value()
+        gain_value = self.gain.get_value()
         identity_value = self.identity.get_value()
 
-        trainable_mask_value, excitation_value, identity_value = lax.cond(
+        trainable_mask_value, gain_value, identity_value = lax.cond(
             should_consolidate,
             lambda values: consolidate(*values),
             lambda values: values,
-            (trainable_mask_value, excitation_value, identity_value),
+            (trainable_mask_value, gain_value, identity_value),
         )
 
         self.cue[...] = cue_index
         self.trainable_mask[...] = trainable_mask_value
-        self.excitation[...] = excitation_value
+        self.gain[...] = gain_value
         self.identity[...] = identity_value
 
         # channel update
@@ -273,7 +271,7 @@ class CoSynRNN(nnx.Module):
             self.W_out.get_value(),
             self.b_h.get_value(),
             self.b_y.get_value(),
-            self.excitation.get_value(),
+            self.gain.get_value(),
             self.W_mask.get_value(),
             self.dt,
             self.tau,
@@ -293,7 +291,7 @@ class CoSynRNN(nnx.Module):
             self.W_out.get_value(),
             self.b_h.get_value(),
             self.b_y.get_value(),
-            self.excitation.get_value(),
+            self.gain.get_value(),
             self.W_mask.get_value(),
             self.dt,
             self.tau,

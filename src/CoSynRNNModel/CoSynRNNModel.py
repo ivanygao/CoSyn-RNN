@@ -44,7 +44,7 @@ class CoSynRNNModel(ModelBase):
     def build_training_step(experiment_config: dict) -> callable:
         loss_fn = get_loss_function(experiment_config["loss"])
 
-        excitation_sparsity_penalty = experiment_config["excitation_sparsity_penalty"]
+        gain_sparsity_penalty = experiment_config["gain_sparsity_penalty"]
         recurrent_sparsity_penalty = experiment_config["recurrent_sparsity_penalty"]
         recurrent_incoming_penalty = experiment_config["recurrent_incoming_penalty"]
         recurrent_outgoing_penalty = experiment_config["recurrent_outgoing_penalty"]
@@ -86,18 +86,16 @@ class CoSynRNNModel(ModelBase):
                 # ==============================
                 # loss
                 # ==============================
-                excitation_value = model.excitation_activation(
-                    model.excitation.get_value()
-                )
+                gain_value = model.gain_activation(model.gain.get_value())
 
                 # ==============================
-                # 1. excitation: L1
+                # 1. gain: L1
                 # ==============================
-                excitation_loss = (
+                gain_loss = (
                     penalty_amplification
-                    * excitation_sparsity_penalty
+                    * gain_sparsity_penalty
                     * (
-                        jnp.sum(jnp.abs(excitation_value * trainable_mask_value_H))
+                        jnp.sum(jnp.abs(gain_value * trainable_mask_value_H))
                         / trainable_mask_size
                     )
                 )
@@ -166,7 +164,7 @@ class CoSynRNNModel(ModelBase):
                 )
 
                 sparsity_loss = (
-                    excitation_loss
+                    gain_loss
                     + recurrent_synapse_loss
                     + recurrent_incoming_loss
                     + recurrent_outgoing_loss
@@ -191,7 +189,7 @@ class CoSynRNNModel(ModelBase):
             W_in_value = state.model.W_in.get_value()
             W_rec_value = state.model.W_rec.get_value()
             b_h_value = state.model.b_h.get_value()
-            excitation_value = state.model.excitation.get_value()
+            gain_value = state.model.gain.get_value()
             W_mask_value = state.model.W_mask.get_value()
             trainable_mask_value = state.model.trainable_mask.get_value()
 
@@ -202,7 +200,7 @@ class CoSynRNNModel(ModelBase):
             grads["W_in"].value = grads["W_in"].value * trainable_mask_value_2d
             grads["W_rec"].value = grads["W_rec"].value * trainable_mask_value_2d
             grads["b_h"].value = grads["b_h"].value * trainable_mask_value
-            grads["excitation"].value = grads["excitation"].value * trainable_mask_value
+            grads["gain"].value = grads["gain"].value * trainable_mask_value
             trainable_W_mask_value = jax.nn.one_hot(
                 state.model.get_cue_index(X), state.model.C, dtype=jnp.bool_
             )[:, None, None]
@@ -220,7 +218,7 @@ class CoSynRNNModel(ModelBase):
             W_rec_new = state.model.W_rec.get_value()
             b_h_new = state.model.b_h.get_value()
             W_mask_new = state.model.W_mask.get_value()
-            excitation_new = state.model.excitation.get_value()
+            gain_new = state.model.gain.get_value()
 
             state.model.W_in[...] = jnp.where(
                 trainable_mask_value_2d, W_in_new, W_in_value
@@ -229,8 +227,8 @@ class CoSynRNNModel(ModelBase):
                 trainable_mask_value_2d, W_rec_new, W_rec_value
             )
             state.model.b_h[...] = jnp.where(trainable_mask_value, b_h_new, b_h_value)
-            state.model.excitation[...] = jnp.where(
-                trainable_mask_value, excitation_new, excitation_value
+            state.model.gain[...] = jnp.where(
+                trainable_mask_value, gain_new, gain_value
             )
             state.model.W_mask[...] = jnp.where(
                 trainable_W_mask_value, W_mask_new, W_mask_value
@@ -254,15 +252,15 @@ class CoSynRNNModel(ModelBase):
 
             trainable_mask_value = state.model.trainable_mask.get_value()  # [H]
 
-            excitation_value_raw = state.model.excitation.get_value()  # [H]
-            excitation_value = jax.nn.relu(excitation_value_raw)  # [H]
+            gain_value_raw = state.model.gain.get_value()  # [H]
+            gain_value = jax.nn.relu(gain_value_raw)  # [H]
 
             # ------------------------------
-            # Excitation threshold metrics
+            # gain threshold metrics
             # ------------------------------
-            excitation_value_abs = jnp.abs(excitation_value)
-            excitation_le_0_fraction = threshold_stats(
-                excitation_value_abs, trainable_mask_value, 0.0
+            gain_value_abs = jnp.abs(gain_value)
+            gain_le_0_fraction = threshold_stats(
+                gain_value_abs, trainable_mask_value, 0.0
             )
 
             # ------------------------------
@@ -311,9 +309,9 @@ class CoSynRNNModel(ModelBase):
                     "loss/sparsity": sparsity_loss,
                     "penalty_amplification": penalty_amplification,
                     "L1/exci_masked": jnp.mean(
-                        excitation_value_abs * trainable_mask_value
+                        gain_value_abs * trainable_mask_value
                     ),
-                    "excitation_le_0_fraction": excitation_le_0_fraction,
+                    "gain_le_0_fraction": gain_le_0_fraction,
                     "W_rec_le_1e-4_fraction": W_rec_le_1e4_fraction,
                     "W_rec_le_1e-5_fraction": W_rec_le_1e5_fraction,
                     "W_out_modulated_le_1e-4_fraction": W_out_modulated_le_1e4_fraction,
@@ -350,9 +348,9 @@ class CoSynRNNModel(ModelBase):
             identity_value = model.identity.get_value()
             channel_value = model.channel.get_value()
 
-            excitation = jax.nn.relu(model.excitation.get_value())
-            excitation_heatmap = plot_matrices_heatmap_helper(
-                excitation[:, None].T, path, f"excitation_heatmap_epoch_{epoch}"
+            gain = jax.nn.relu(model.gain.get_value())
+            gain_heatmap = plot_matrices_heatmap_helper(
+                gain[:, None].T, path, f"gain_heatmap_epoch_{epoch}"
             )
 
             W_rec_value = model.W_rec.get_value()
@@ -395,7 +393,7 @@ class CoSynRNNModel(ModelBase):
             )
 
             return {
-                "excitation_heatmap": excitation_heatmap,
+                "gain_heatmap": gain_heatmap,
                 "rec_task_block_norm_heatmap": rec_task_block_norm_heatmap,
                 "rec_sorted_by_threshold_count_clip_heatmap": rec_sorted_by_threshold_count_clip_heatmap,
                 "W_out_modulated_grid_clip_heatmap": W_out_modulated_grid_clip_heatmap,

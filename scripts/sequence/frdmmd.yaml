@@ -11,55 +11,63 @@ dataset:
   training_size: 128000
   validation_size: 4096
   test_size: 4096
-  
+
 workflow:
   - name: "phase1"
     epochs: 100
     training_strategy: sequential
     training_tasks: [fdgo-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase2"
     epochs: 100
     training_strategy: sequential
     training_tasks: [fdanti-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase3"
     epochs: 100
     training_strategy: sequential
     training_tasks: [reactgo-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase4"
     epochs: 100
     training_strategy: sequential
     training_tasks: [reactanti-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase5"
     epochs: 100
     training_strategy: sequential
     training_tasks: [delaygo-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase6"
     epochs: 100
     training_strategy: sequential
     training_tasks: [delayanti-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase7"
     epochs: 100
     training_strategy: sequential
     training_tasks: [multidm-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
   - name: "phase8"
     epochs: 100
     training_strategy: sequential
     training_tasks: [multidelaydm-ry]
-    validation_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
+    validation_tasks:
+      [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
     test_tasks: [fdgo-ry, fdanti-ry, reactgo-ry, reactanti-ry, delaygo-ry, delayanti-ry, multidm-ry, multidelaydm-ry]
 
 training:
@@ -73,7 +81,7 @@ models:
     tau: [100]
     hidden_size: [256]
     hidden_activation: [leakyrelu]
-    excitation_activation: [relu]
+    gain_activation: [relu]
     modulation_activation: [sigmoid20]
     output_activation: [linear]
     initial_weight_distribution: [uniform]
@@ -87,8 +95,8 @@ models:
     loss: [mse]
     optimizer: [adam]
     learning_rate: [1e-4]
-    
-    excitation_sparsity_penalty: [0.1]
+
+    gain_sparsity_penalty: [0.1]
     recurrent_sparsity_penalty: [1]
     recurrent_incoming_penalty: [0.01]
     recurrent_outgoing_penalty: [0.01]
