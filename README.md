@@ -5,18 +5,18 @@ presented in:
 
 > **Discrete Synaptic States and Context-Modulated Readouts Support
 > Continual Learning**\
-> [Paper link]()
+> [https://www.biorxiv.org/content/10.64898/2026.09.11.750704v1](https://www.biorxiv.org/content/10.64898/2026.09.11.750704v1)
 
 ## Overview
 
 This repository implements the continual learning framework proposed in
 the paper, including:
 
--   CoSyn-RNN models with discrete synaptic states and context-modulated
-    readouts
--   training and evaluation pipelines
--   dataset generation utilities
--   experiment configurations and analysis scripts
+- CoSyn-RNN models with discrete synaptic states and context-modulated
+  readouts
+- training and evaluation pipelines
+- dataset generation utilities
+- experiment configurations and analysis scripts
 
 The codebase is organized to reproduce the experiments reported in the
 paper.
@@ -27,20 +27,20 @@ The code was developed and tested on Linux with NVIDIA CUDA 13 support.
 
 Create the Conda environment from the repository root:
 
-``` bash
+```bash
 conda env create -f packages/nntp/environments/linux-cuda13.yml
 conda activate nntp-cuda13
 ```
 
 Install the `nntp` package:
 
-``` bash
+```bash
 pip install -e ./packages/nntp
 ```
 
 Weights & Biases logging is optional. To enable experiment tracking:
 
-``` bash
+```bash
 wandb login
 ```
 
@@ -50,7 +50,7 @@ Logging can be disabled through the experiment configuration files.
 
 Generate the datasets required for the experiments:
 
-``` bash
+```bash
 ./scripts/data/generate_data.sh
 ```
 
@@ -61,7 +61,7 @@ according to the configured tasks and random seeds.
 
 A single experiment can be launched with:
 
-``` bash
+```bash
 nntp \
   --entrypoint ./src/entrypoint.py \
   run \
@@ -73,7 +73,7 @@ Remove `--debug` for a standard experiment run.
 
 Experiment configurations are stored in:
 
-``` text
+```text
 scripts/
 ```
 
@@ -87,7 +87,7 @@ corresponding configuration files.
 
 Example:
 
-``` bash
+```bash
 nntp \
   --entrypoint ./src/entrypoint.py \
   run \
@@ -101,7 +101,7 @@ experiments are provided in the `scripts/` directory.
 
 Experiment outputs include:
 
-``` text
+```text
 runtime/
 ├── data/           # Training datas
 ├── logs/           # Training logs
@@ -113,7 +113,7 @@ through Weights & Biases.
 
 ## Repository Structure
 
-``` text
+```text
 .
 ├── packages/nntp/          # Training pipeline package
 │   └── environments/       # Conda environment definitions
@@ -125,4 +125,13 @@ through Weights & Biases.
 
 ## Citation
 
-Citation information will be added after publication.
+```text
+@article{gao2026discrete,
+  title={Discrete synaptic states and context-modulated readouts support continual learning},
+  author={Gao, Yuan and Mihalas, Stefan and Turcu, Denis},
+  journal={bioRxiv},
+  pages={2026--09},
+  year={2026},
+  publisher={Cold Spring Harbor Laboratory}
+}
+```
