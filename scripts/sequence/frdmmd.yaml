@@ -75,37 +75,68 @@ training:
   batch_size: 256
 
 models:
-  CoSynRNNModel:
+  # CoSynRNNModel:
+  #   # RNN specific
+  #   dt: [20]
+  #   tau: [100]
+  #   hidden_size: [256]
+  #   hidden_activation: [leakyrelu]
+  #   gain_activation: [relu]
+  #   modulation_activation: [sigmoid20]
+  #   output_activation: [linear]
+  #   initial_weight_distribution: [uniform]
+  #   initial_spectral_radius: [1]
+  #   noise_std: [0.05]
+
+  #   cue_index_start: [65]
+  #   threshold: [1e-4]
+
+  #   # training required parameters
+  #   loss: [mse]
+  #   optimizer: [adam]
+  #   learning_rate: [1e-4]
+
+  #   gain_sparsity_penalty: [0.1]
+  #   recurrent_sparsity_penalty: [1]
+  #   recurrent_incoming_penalty: [0.01]
+  #   recurrent_outgoing_penalty: [0.01]
+  #   modulated_readout_penalty: [0.1]
+
+  #   # Task specific
+  #   fixation_tolerance: [0.1]
+  #   radius_tolerance: [0.2]
+  #   angle_tolerance: [36] # out of 360 degrees, RY's theta
+  #   fixation_threshold: [0.1]
+  #   radius_threshold: [0.2]
+  #   angle_threshold: [36] # out of 360 degrees, RY's theta
+
+  RNNModel:
     # RNN specific
     dt: [20]
     tau: [100]
     hidden_size: [256]
     hidden_activation: [leakyrelu]
-    gain_activation: [relu]
-    modulation_activation: [sigmoid20]
     output_activation: [linear]
     initial_weight_distribution: [uniform]
     initial_spectral_radius: [1]
     noise_std: [0.05]
 
-    cue_index_start: [65]
-    threshold: [1e-4]
-
     # training required parameters
+    trainable_params:
+      - W_in: true
+        W_rec: true
+        W_out: true
+        b_h: true
+        b_y: true
+
     loss: [mse]
     optimizer: [adam]
     learning_rate: [1e-4]
 
-    gain_sparsity_penalty: [0.1]
-    recurrent_sparsity_penalty: [1]
-    recurrent_incoming_penalty: [0.01]
-    recurrent_outgoing_penalty: [0.01]
-    modulated_readout_penalty: [0.1]
-
     # Task specific
     fixation_tolerance: [0.1]
     radius_tolerance: [0.2]
-    angle_tolerance: [36] # out of 360 degrees, RY's theta
+    angle_tolerance: [36] # out of 360 degrees
     fixation_threshold: [0.1]
     radius_threshold: [0.2]
-    angle_threshold: [36] # out of 360 degrees, RY's theta
+    angle_threshold: [36] # out of 360 degrees
