@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=nntp-sequence
-#SBATCH --output=runtime/logs/%x-%j.out
-#SBATCH --error=runtime/logs/%x-%j.err
+#SBATCH --output=/allen/aind/scratch/denis.turcu/CoSyn-RNN/scripts/sequence/runtime/logs/%x-%j.out
+#SBATCH --error=/allen/aind/scratch/denis.turcu/CoSyn-RNN/scripts/sequence/runtime/logs/%x-%j.err
 
 #SBATCH --nodes=1
 #SBATCH --mem=256G
@@ -14,29 +14,29 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=denis.turcu@alleninstitute.org
 
-set -e
+set -Eeuo pipefail
+trap 'status=$?; echo "ERROR: line $LINENO: $BASH_COMMAND (exit $status)" >&2; exit "$status"' ERR
 
 echo "SLURM job started at: $(date)"
 
-mkdir -p runtime/logs
+readonly PROJECT_ROOT=/allen/aind/scratch/denis.turcu/CoSyn-RNN
+readonly MICROMAMBA=/home/denis.turcu/.local/bin/micromamba
+readonly CONFIG_NAME=${1:?"Usage: sbatch sequence-dt.sbatch <config.yaml>"}
+readonly CONFIG="$PROJECT_ROOT/scripts/sequence/$CONFIG_NAME"
 
-# ========== 1. Activate Environment ==========
-source ~/.bashrc
-micromamba activate nntp-cuda13
+if [[ ! -f "$CONFIG" ]]; then
+	echo "Config file not found: $CONFIG" >&2
+	exit 2
+fi
 
-# ========== 2. Move to project root ==========
-cd /allen/aind/scratch/denis.turcu/CoSyn-RNN
+cd "$PROJECT_ROOT"
 
 echo "Running on node: $(hostname)"
 
-# ========== 3. Run ==========
-# CONFIG=scripts/sequence/frdmmd.yaml
-# CONFIG=scripts/sequence/mddmrf.yaml
-CONFIG=$1
-
 echo "[$SLURM_JOB_ID] Running config: $CONFIG"
 
-nntp --entrypoint=./src/entrypoint.py run --config="${CONFIG}"
+"$MICROMAMBA" run -n nntp-cuda13 \
+	nntp --entrypoint=./src/entrypoint.py run --config="$CONFIG"
 
 # sbatch sequence-dt.sbatch frdmmd.yaml
-# sbatch sequence-dt.sbatch mmdmrf.yaml
+# sbatch sequence-dt.sbatch mddmrf.yaml
