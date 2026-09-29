@@ -212,6 +212,7 @@ runtime/
 runtime-bk/
 wandb/
 figures/experiments*
+figures/vanillas*
 figures/similarity*
 figures/full*
 notebooks/experiments*

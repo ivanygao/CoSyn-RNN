@@ -25,6 +25,8 @@ echo "Running on node: $(hostname)"
 # ========== 3. Define input/output ==========
 folder="./figures/experiments"
 output="./figures/experiments.tar.gz"
+folder="./figures/vanillas"
+output="./figures/vanillas.tar.gz"
 # folder="./figures/similarity"
 # output="./figures/similarity.tar.gz"
 # folder="./figures/full"
