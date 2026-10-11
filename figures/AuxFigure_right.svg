@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="344.91345"
+   height="284.78482"
+   viewBox="0 0 344.91345 284.78482"
+   role="img"
+   aria-labelledby="title description"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="AuxFigure_right.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   inkscape:export-filename="AuxFigure_right.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs11" />
+  <sodipodi:namedview
+     id="namedview11"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.1236751"
+     inkscape:cx="166.11396"
+     inkscape:cy="147.56255"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11" />
+  <title
+     id="title">Row, column and synapse regularization</title>
+  <desc
+     id="description">An eight by eight recurrent weight matrix. Column four and row six are highlighted for L1L2 regularization. The synapse in row three, column seven is highlighted for L1 regularization.</desc>
+  <!-- Native vector shapes and editable text. -->
+  <g
+     id="highlight-fills"
+     transform="translate(-28.305294,3.6090285)">
+    <rect
+       x="209.78299"
+       y="38.212509"
+       width="82.797981"
+       height="217"
+       rx="10.442989"
+       fill="#2868ff"
+       fill-opacity="0.2"
+       id="rect1"
+       style="stroke-width:1.72734" />
+    <rect
+       x="71"
+       y="173.5"
+       width="222"
+       height="79.607964"
+       rx="3.5"
+       fill="#00a1b5"
+       fill-opacity="0.16"
+       id="rect2"
+       style="stroke-width:1.73323" />
+    <rect
+       x="237"
+       y="92.400002"
+       width="26.5"
+       height="27"
+       rx="3"
+       fill="#ff5348"
+       fill-opacity="0.1"
+       id="rect3" />
+  </g>
+  <g
+     id="grid"
+     fill="none"
+     stroke="#acb5bf"
+     stroke-width="0.8"
+     transform="translate(-28.305294,3.6090285)">
+    <path
+       d="M 98.75,37 V 254 M 126.5,37 V 254 M 154.25,37 V 254 M 182,37 V 254 M 209.75,37 V 254 M 237.5,37 V 254 M 265.25,37 v 217"
+       id="path3" />
+    <path
+       d="M 71,64.125 H 293 M 71,91.25 H 293 M 71,118.375 H 293 M 71,145.5 H 293 M 71,172.625 H 293 M 71,199.75 H 293 M 71,226.875 h 222"
+       id="path4" />
+  </g>
+  <g
+     id="weights"
+     fill="#0c2944"
+     transform="translate(-28.305294,3.6090285)">
+    <rect
+       id="r1-c1"
+       x="78"
+       y="44"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r1-c5"
+       x="188"
+       y="44"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r2-c2"
+       x="105.5"
+       y="71.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r2-c4"
+       x="160"
+       y="71.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r3-c3"
+       x="132.5"
+       y="98.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r3-c7"
+       x="242.5"
+       y="98.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r4-c8"
+       x="270.5"
+       y="126"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r5-c2"
+       x="105.5"
+       y="153.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r5-c6"
+       x="215.5"
+       y="153.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r6-c4"
+       x="160"
+       y="179.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r6-c8"
+       x="270.5"
+       y="179.5"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r7-c3"
+       x="132.5"
+       y="206"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r7-c5"
+       x="188"
+       y="206"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r8-c1"
+       x="78"
+       y="232"
+       width="14.5"
+       height="14.5" />
+    <rect
+       id="r8-c7"
+       x="242.5"
+       y="232"
+       width="14.5"
+       height="14.5" />
+  </g>
+  <rect
+     id="matrix-border"
+     x="42.694706"
+     y="40.609032"
+     width="222"
+     height="217"
+     fill="none"
+     stroke="#15334f"
+     stroke-width="2" />
+  <rect
+     id="matrix-border-inner"
+     x="45.403442"
+     y="43.347015"
+     width="132.65091"
+     height="130.73766"
+     fill="none"
+     stroke="#15334f"
+     stroke-width="1.2344"
+     style="stroke:#ffa89a;stroke-width:2.92364;stroke-dasharray:none;stroke-opacity:1" />
+  <g
+     id="highlight-outlines"
+     fill="none"
+     stroke-width="2.2"
+     transform="translate(-28.305294,3.6090285)">
+    <rect
+       id="column"
+       x="210.08427"
+       y="37.786278"
+       width="82.195435"
+       height="215.42744"
+       rx="10.366992"
+       stroke="#2868ff"
+       style="stroke-width:3.77256" />
+    <rect
+       id="row"
+       x="71.790581"
+       y="174.29057"
+       width="220.66135"
+       height="78.754318"
+       rx="3.4788949"
+       stroke="#008ba0"
+       style="stroke-width:3.78114" />
+    <rect
+       id="synapse"
+       x="237"
+       y="92.400002"
+       width="26.5"
+       height="27"
+       rx="3"
+       stroke="#ff5348" />
+  </g>
+  <g
+     id="column-label"
+     fill="#2868ff"
+     font-family="Arial, Helvetica, sans-serif"
+     font-weight="700"
+     text-anchor="middle"
+     transform="translate(54.630436,3.8515306)">
+    <text
+       x="167.8269"
+       y="7.0688796"
+       font-size="15px"
+       id="text4">Column</text>
+    <text
+       x="167.8269"
+       y="18.56888"
+       font-size="12px"
+       id="text5">L1L2</text>
+    <path
+       d="M 168.35737,29.5 V 36"
+       fill="none"
+       stroke="#2868ff"
+       stroke-width="1.8"
+       id="path5" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.11106px;writing-mode:lr-tb;direction:ltr;fill:#2868ff;fill-opacity:1;stroke:none;stroke-width:1.25974;stroke-dasharray:none"
+       x="168.25305"
+       y="26.395906"
+       id="text13"><tspan
+         sodipodi:role="line"
+         id="tspan11-4"
+         x="168.25305"
+         y="26.395906"
+         style="fill:#2868ff;fill-opacity:1;stroke-width:1.25974;stroke-dasharray:none">outgoing</tspan></text>
+  </g>
+  <g
+     id="row-label"
+     fill="#008ba0"
+     font-family="Arial, Helvetica, sans-serif"
+     font-weight="700"
+     text-anchor="middle"
+     transform="translate(-28.305294,31.739276)">
+    <text
+       x="44.020138"
+       y="183.31747"
+       font-size="16px"
+       id="text6">Row</text>
+    <text
+       x="44.020138"
+       y="196.31747"
+       font-size="12px"
+       id="text7">L1L2</text>
+    <path
+       d="M 59.503243,187.21475 H 70"
+       fill="none"
+       stroke="#008ba0"
+       stroke-width="1.8"
+       id="path7"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.11106px;writing-mode:lr-tb;direction:ltr;fill:#008ba0;fill-opacity:1;stroke:none;stroke-width:1.25974;stroke-dasharray:none"
+       x="44.785721"
+       y="204.4548"
+       id="text12"><tspan
+         sodipodi:role="line"
+         id="tspan11"
+         x="44.785721"
+         y="204.4548"
+         style="stroke-width:1.25974;stroke-dasharray:none">incoming</tspan></text>
+  </g>
+  <g
+     id="synapse-label"
+     fill="#ff463c"
+     font-family="Arial, Helvetica, sans-serif"
+     font-weight="700"
+     transform="translate(-28.305294,3.6090285)">
+    <text
+       x="308"
+       y="84.5"
+       font-size="16px"
+       id="text8">Synapse</text>
+    <text
+       x="338.5"
+       y="98.5"
+       font-size="12px"
+       text-anchor="middle"
+       id="text9">L1</text>
+    <path
+       d="M 264,99 306,82.5"
+       fill="none"
+       stroke="#ff5348"
+       stroke-width="1.8"
+       id="path9" />
+  </g>
+  <g
+     id="matrix-symbol"
+     fill="#15334f"
+     font-family="'Times New Roman', Cambria, serif"
+     font-style="italic"
+     transform="translate(-28.305294,3.6090285)">
+    <text
+       x="168"
+       y="277"
+       font-size="26px"
+       font-weight="700"
+       id="text10">W</text>
+    <text
+       x="191.5"
+       y="281"
+       font-size="15px"
+       id="text11">rec</text>
+  </g>
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Row, column and synapse regularization</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="ng-label"
+     fill="#012143"
+     font-family="Arial, Helvetica, sans-serif"
+     font-weight="700"
+     text-anchor="middle"
+     transform="matrix(0.53865759,0,0,0.57168093,-14.52005,3.2199506)"
+     style="fill:#ffa89a;fill-opacity:1">
+    <text
+       x="235"
+       y="53.5"
+       font-size="26px"
+       id="text6-0"
+       style="fill:#ffa89a;fill-opacity:1">Neuron Group</text>
+    <path
+       d="M 235,58 V 68"
+       fill="none"
+       stroke="#012143"
+       stroke-width="2.8"
+       id="path7-9"
+       style="fill:none;fill-opacity:1;stroke:#ffa89a;stroke-opacity:1" />
+  </g>
+</svg>
